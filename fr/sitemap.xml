@@ -17,20 +17,6 @@
   </url>
   
   <url>
-    <loc>https://bongosway.github.io/fr/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://bongosway.github.io/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="fr"
-                href="https://bongosway.github.io/fr/"
-                />
-  </url>
-  
-  <url>
     <loc>https://bongosway.github.io/fr/series/</loc>
     <xhtml:link
                 rel="alternate"
@@ -55,6 +41,20 @@
                 rel="alternate"
                 hreflang="fr"
                 href="https://bongosway.github.io/fr/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://bongosway.github.io/fr/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://bongosway.github.io/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="fr"
+                href="https://bongosway.github.io/fr/"
                 />
   </url>
   
