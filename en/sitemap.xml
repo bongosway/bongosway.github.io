@@ -3,6 +3,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</loc>
+    <lastmod>2020-07-05T10:04:17+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset/</loc>
+    <lastmod>2020-07-05T10:04:17+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bongosway.github.io/posts/</loc>
+    <lastmod>2020-07-05T10:04:17+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bongosway.github.io/tags/</loc>
+    <lastmod>2020-07-05T10:04:17+01:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="fr"
+                href="https://bongosway.github.io/fr/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://bongosway.github.io/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://bongosway.github.io/</loc>
+    <lastmod>2020-07-05T10:04:17+01:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="fr"
+                href="https://bongosway.github.io/fr/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://bongosway.github.io/"
+                />
+  </url>
+  
+  <url>
     <loc>https://bongosway.github.io/categories/</loc>
     <xhtml:link
                 rel="alternate"
@@ -27,34 +72,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://bongosway.github.io/series/"
-                />
-  </url>
-  
-  <url>
-    <loc>https://bongosway.github.io/tags/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="fr"
-                href="https://bongosway.github.io/fr/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://bongosway.github.io/tags/"
-                />
-  </url>
-  
-  <url>
-    <loc>https://bongosway.github.io/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="fr"
-                href="https://bongosway.github.io/fr/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://bongosway.github.io/"
                 />
   </url>
   
