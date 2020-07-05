@@ -5,10 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Edirin Atumah ">
-<meta name="description" content="Introduction Whilst building a demo application showcasing google AutoService. Whilst searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
-In this guide, you will configure AutoService using maven to register the right implementation of types using META-INF metadata.
-When you&amp;rsquo;re finished, you&amp;rsquo;ll be able to build jar files with the right META-INF/services information.
-Prerequisites Before you begin this guide you&amp;rsquo;ll need:" />
+<meta name="description" content="Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+ java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
+The main cause of this error, is putting the wrong Autoservice dependency in the classpath.
+If your POM file resembles the one below, then you are most likely get this error." />
 <meta name="keywords" content=", maven, autoservice, google, toImmutableSet" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="#252627" />
@@ -45,13 +45,13 @@ Prerequisites Before you begin this guide you&amp;rsquo;ll need:" />
 
 
 <meta itemprop="name" content="How to solve google toImmutableSet() NoSuchMethodError on a Maven project">
-<meta itemprop="description" content="Introduction Whilst building a demo application showcasing google AutoService. Whilst searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
-In this guide, you will configure AutoService using maven to register the right implementation of types using META-INF metadata.
-When you&rsquo;re finished, you&rsquo;ll be able to build jar files with the right META-INF/services information.
-Prerequisites Before you begin this guide you&rsquo;ll need:">
+<meta itemprop="description" content="Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+ java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
+The main cause of this error, is putting the wrong Autoservice dependency in the classpath.
+If your POM file resembles the one below, then you are most likely get this error.">
 <meta itemprop="datePublished" content="2020-07-05T10:04:17&#43;01:00" />
 <meta itemprop="dateModified" content="2020-07-05T10:04:17&#43;01:00" />
-<meta itemprop="wordCount" content="402">
+<meta itemprop="wordCount" content="460">
 <meta itemprop="image" content="https://bongosway.github.io/"/>
 
 
@@ -61,18 +61,18 @@ Prerequisites Before you begin this guide you&rsquo;ll need:">
 <meta name="twitter:image" content="https://bongosway.github.io/"/>
 
 <meta name="twitter:title" content="How to solve google toImmutableSet() NoSuchMethodError on a Maven project"/>
-<meta name="twitter:description" content="Introduction Whilst building a demo application showcasing google AutoService. Whilst searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
-In this guide, you will configure AutoService using maven to register the right implementation of types using META-INF metadata.
-When you&rsquo;re finished, you&rsquo;ll be able to build jar files with the right META-INF/services information.
-Prerequisites Before you begin this guide you&rsquo;ll need:"/>
+<meta name="twitter:description" content="Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+ java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
+The main cause of this error, is putting the wrong Autoservice dependency in the classpath.
+If your POM file resembles the one below, then you are most likely get this error."/>
 
 
 
     <meta property="og:title" content="How to solve google toImmutableSet() NoSuchMethodError on a Maven project" />
-<meta property="og:description" content="Introduction Whilst building a demo application showcasing google AutoService. Whilst searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
-In this guide, you will configure AutoService using maven to register the right implementation of types using META-INF metadata.
-When you&rsquo;re finished, you&rsquo;ll be able to build jar files with the right META-INF/services information.
-Prerequisites Before you begin this guide you&rsquo;ll need:" />
+<meta property="og:description" content="Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+ java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
+The main cause of this error, is putting the wrong Autoservice dependency in the classpath.
+If your POM file resembles the one below, then you are most likely get this error." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project.html" />
 <meta property="og:image" content="https://bongosway.github.io/"/>
@@ -145,7 +145,7 @@ Prerequisites Before you begin this guide you&rsquo;ll need:" />
     <main class="post">
 
         <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
 
             
 
@@ -162,9 +162,19 @@ Prerequisites Before you begin this guide you&rsquo;ll need:" />
             <div class="post-content">
                 <h2 id="introduction">Introduction</h2>
 <p>Whilst building a demo application showcasing google
-<a href="https://github.com/google/auto/tree/master/service">AutoService</a>.
-Whilst searching through the internet I discoverd most solutions recommended upgrading the <a href="https://github.com/google/guava">Google Guava</a> version, but upgrading the version did not resolve my problem.</p>
-<p>In this guide, you will configure <strong>AutoService</strong> using <code>maven</code> to register the right implementation of types using META-INF metadata.</p>
+<a href="https://github.com/google/auto/tree/master/service">AutoService</a>, I encountered the below error:</p>
+<pre><code> java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector;
+</code></pre><p>Searching through the internet I discoverd most solutions recommended upgrading the <a href="https://github.com/google/guava">Google Guava</a> version, but upgrading the version did not resolve my problem.</p>
+<p>The main cause of this error, is putting the wrong <code>Autoservice</code> dependency in the classpath.</p>
+<p>If your POM file resembles the one below, then you are most likely get this error.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"> <span style="color:#f92672">&lt;/dependencies&gt;</span>
+ 	<span style="color:#f92672">&lt;dependency&gt;</span>
+      <span style="color:#f92672">&lt;groupId&gt;</span>com.google.auto.service<span style="color:#f92672">&lt;/groupId&gt;</span>
+      <span style="color:#f92672">&lt;artifactId&gt;</span>auto-service<span style="color:#f92672">&lt;/artifactId&gt;</span>
+      <span style="color:#f92672">&lt;version&gt;</span>1.0-rc7<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span>
+ <span style="color:#f92672">&lt;/dependencies&gt;</span>
+</code></pre></div><p>In this guide, you will solve the compilation error when using <strong>AutoService</strong> on a <code>maven</code> project to register the right implementation of types in the META-INF/services.</p>
 <p>When you&rsquo;re finished, you&rsquo;ll be able to build jar files with the right
 <code>META-INF/services</code> information.</p>
 <h2 id="prerequisites">Prerequisites</h2>
@@ -186,7 +196,7 @@ Whilst searching through the internet I discoverd most solutions recommended upg
 <p><code>com.google.auto.service:auto-service:jar:&lt;version&gt;:compile</code></p>
 <p><code>com.google.auto.service:auto-service-annotations:jar:&lt;version&gt;:compile</code></p>
 <h2 id="step-2--add-autoservice-annotation-dependency-to-pom-file">Step 2 — Add AutoService Annotation Dependency to POM file</h2>
-<p>Add the following compile-time dependency to your classpath so the project can compile</p>
+<p>Add the following compile-time dependency to your classpath so the project can compile and pull in the relevant classes.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependencies&gt;</span>
   <span style="color:#f92672">&lt;dependency&gt;</span>
     <span style="color:#f92672">&lt;groupId&gt;</span>com.google.auto.service<span style="color:#f92672">&lt;/groupId&gt;</span>
@@ -224,7 +234,7 @@ This is the exact problem <code>Autoservice</code> solves for us, removing the n
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mvn clean package
 </code></pre></div><p>Spy the content of the Jar file again, to view the generated metadata</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$  jar tf target/&lt;jar-filename&gt;.jar | grep META-INF/services/
-</code></pre></div><p>Assuming our processor class is <code>org.ihq.MyAutoclass</code>, then the output should resemble below</p>
+</code></pre></div><p>Assuming our processor class is <code>org.ihq.MyAutoclass</code>, this time the output should resemble below</p>
 <pre><code>META-INF/services/
 META-INF/services/org.ihq.MyAutoclass
 
@@ -241,7 +251,7 @@ META-INF/services/org.ihq.MyAutoclass
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset">maven, autoservice, google, toImmutableSet</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>402 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>460 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-07-05 10:04 &#43;0100</p>
         </div>
