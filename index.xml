@@ -1,28 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Thought before Tools</title>
-    <link>https://bongosway.github.io/</link>
-    <description>Recent content on Thought before Tools</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 05 Jul 2020 10:04:17 +0100</lastBuildDate>
-    
-	<atom:link href="https://bongosway.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>How to solve google toImmutableSet() NoSuchMethodError on a Maven project</title>
-      <link>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</link>
-      <pubDate>Sun, 05 Jul 2020 10:04:17 +0100</pubDate>
-      
-      <guid>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</guid>
-      <description>Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
- java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Thought before Tools</title><link>https://bongosway.github.io/</link><description>Recent content on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 05 Jul 2020 10:04:17 +0100</lastBuildDate><atom:link href="https://bongosway.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>How to solve google toImmutableSet() NoSuchMethodError on a Maven project</title><link>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</link><pubDate>Sun, 05 Jul 2020 10:04:17 +0100</pubDate><guid>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</guid><description>Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
 The main cause of this error, is putting the wrong Autoservice dependency in the classpath.
-If your POM file resembles the one below, then you are most likely get this error.</description>
-    </item>
-    
-  </channel>
-</rss>
+If your POM file resembles the one below, then you are most likely get this error.</description></item></channel></rss>
