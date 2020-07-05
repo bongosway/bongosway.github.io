@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Thought before Tools</title>
-    <link>https://bongosway.github.io/tags.html</link>
+    <link>https://bongosway.github.io/tags/</link>
     <description>Recent content in Tags on Thought before Tools</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -14,10 +14,10 @@
     
     <item>
       <title>maven, autoservice, google, toImmutableSet</title>
-      <link>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset.html</link>
+      <link>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset/</link>
       <pubDate>Sun, 05 Jul 2020 10:04:17 +0100</pubDate>
       
-      <guid>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset.html</guid>
+      <guid>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset/</guid>
       <description></description>
     </item>
     
