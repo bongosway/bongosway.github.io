@@ -3,32 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</loc>
+    <loc>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project.html</loc>
     <lastmod>2020-07-05T10:04:17+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset/</loc>
+    <loc>https://bongosway.github.io/tags/maven-autoservice-google-toimmutableset.html</loc>
     <lastmod>2020-07-05T10:04:17+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bongosway.github.io/posts/</loc>
+    <loc>https://bongosway.github.io/posts.html</loc>
     <lastmod>2020-07-05T10:04:17+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bongosway.github.io/tags/</loc>
+    <loc>https://bongosway.github.io/tags.html</loc>
     <lastmod>2020-07-05T10:04:17+01:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="https://bongosway.github.io/fr/tags/"
+                href="https://bongosway.github.io/fr/tags.html"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://bongosway.github.io/tags/"
+                href="https://bongosway.github.io/tags.html"
                 />
   </url>
   
@@ -48,30 +48,30 @@
   </url>
   
   <url>
-    <loc>https://bongosway.github.io/categories/</loc>
+    <loc>https://bongosway.github.io/categories.html</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="https://bongosway.github.io/fr/categories/"
+                href="https://bongosway.github.io/fr/categories.html"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://bongosway.github.io/categories/"
+                href="https://bongosway.github.io/categories.html"
                 />
   </url>
   
   <url>
-    <loc>https://bongosway.github.io/series/</loc>
+    <loc>https://bongosway.github.io/series.html</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="https://bongosway.github.io/fr/series/"
+                href="https://bongosway.github.io/fr/series.html"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://bongosway.github.io/series/"
+                href="https://bongosway.github.io/series.html"
                 />
   </url>
   
