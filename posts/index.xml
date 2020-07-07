@@ -1,13 +1,14 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Thought before Tools</title><link>https://bongosway.github.io/posts/</link><description>Recent content in Posts on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 05 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://bongosway.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>How to solve google toImmutableSet() NoSuchMethodError on a Maven project</title><link>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</link><pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate><guid>https://bongosway.github.io/posts/2020/07/how-to-solve-google-toimmutableset-nosuchmethoderror-on-a-maven-project/</guid><description>Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
-java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet I discoverd most solutions recommended upgrading the Google Guava version, but upgrading the version did not resolve my problem.
-The main cause of this error, is putting the wrong Autoservice dependency in the classpath.
-If your POM file resembles the one below, then you are most likely get this error.</description><content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Thought before Tools</title><link>https://bongosway.github.io/posts/</link><description>Recent content in Posts on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 05 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://bongosway.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>How to solve the NoSuchMethodError toImmutableSet() error when using Google Autoservice</title><link>https://bongosway.github.io/posts/2020/07/how-to-solve-the-nosuchmethoderror-toimmutableset-error-when-using-google-autoservice/</link><pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate><guid>https://bongosway.github.io/posts/2020/07/how-to-solve-the-nosuchmethoderror-toimmutableset-error-when-using-google-autoservice/</guid><description>Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet, most solutions recommended upgrading the Google Guava version but that did not resolve the problem.
+The main cause of this error, was putting the wrong Autoservice dependency in the classpath.
+If your POM file has the below dependency, then you are most likely get this error.
+&amp;lt;/dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.google.auto.service&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;auto-service&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.</description><content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
 <p>Whilst building a demo application showcasing google
 <a href="https://github.com/google/auto/tree/master/service">AutoService</a>, I encountered the below error:</p>
 <pre><code> java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector;
-</code></pre><p>Searching through the internet I discoverd most solutions recommended upgrading the <a href="https://github.com/google/guava">Google Guava</a> version, but upgrading the version did not resolve my problem.</p>
-<p>The main cause of this error, is putting the wrong <code>Autoservice</code> dependency in the classpath.</p>
-<p>If your POM file resembles the one below, then you are most likely get this error.</p>
+</code></pre><p>Searching through the internet, most solutions recommended upgrading the <a href="https://github.com/google/guava">Google Guava</a> version but that did not resolve the problem.</p>
+<p>The main cause of this error, was putting the wrong <code>Autoservice</code> dependency in the classpath.</p>
+<p>If your POM file has the below dependency, then you are most likely get this error.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"> <span style="color:#f92672">&lt;/dependencies&gt;</span>
  	<span style="color:#f92672">&lt;dependency&gt;</span>
       <span style="color:#f92672">&lt;groupId&gt;</span>com.google.auto.service<span style="color:#f92672">&lt;/groupId&gt;</span>
@@ -15,7 +16,7 @@ If your POM file resembles the one below, then you are most likely get this erro
       <span style="color:#f92672">&lt;version&gt;</span>1.0-rc7<span style="color:#f92672">&lt;/version&gt;</span>
     <span style="color:#f92672">&lt;/dependency&gt;</span>
  <span style="color:#f92672">&lt;/dependencies&gt;</span>
-</code></pre></div><p>In this guide, you will solve the compilation error when using <strong>AutoService</strong> on a <code>maven</code> project to register the right implementation of types in the META-INF/services.</p>
+</code></pre></div><p>In this guide, you will solve the compilation error when using <strong>AutoService</strong> on a <code>maven</code> project.</p>
 <p>When you&rsquo;re finished, you&rsquo;ll be able to build jar files with the right
 <code>META-INF/services</code> information.</p>
 <h2 id="prerequisites">Prerequisites</h2>
