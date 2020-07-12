@@ -1,4 +1,85 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Thought before Tools</title><link>https://bongosway.github.io/posts/</link><description>Recent content in Posts on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 05 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://bongosway.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>How to solve the NoSuchMethodError toImmutableSet() error when using Google Autoservice</title><link>https://bongosway.github.io/posts/2020/07/how-to-solve-the-nosuchmethoderror-toimmutableset-error-when-using-google-autoservice/</link><pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate><guid>https://bongosway.github.io/posts/2020/07/how-to-solve-the-nosuchmethoderror-toimmutableset-error-when-using-google-autoservice/</guid><description>Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Thought before Tools</title><link>https://bongosway.github.io/posts/</link><description>Recent content in Posts on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Sun, 12 Jul 2020 10:32:43 +0100</lastBuildDate><atom:link href="https://bongosway.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Should I Remove PageObjects from my Test Class?</title><link>https://bongosway.github.io/posts/2020/07/should-i-remove-pageobjects-from-my-test-class/</link><pubDate>Sun, 12 Jul 2020 10:32:43 +0100</pubDate><guid>https://bongosway.github.io/posts/2020/07/should-i-remove-pageobjects-from-my-test-class/</guid><description>The short answer is YES!
+Introduction The Page Object Pattern is a popular design pattern used to represent services provided by a page (reads the rendered page you see on your screen). Whilst this is a good pattern to drive the application under test, it should not be visible to the test class.
+Why? The test class is no longer isolated from internal code changes Binds the test class to the underlying technology/library Low-level code details pollute the test class The test class should represent the domain behaviours only, not the implementation.</description><content type="html"><![CDATA[<p><strong><em>The short answer is YES!</em></strong></p>
+<h2 id="introduction">Introduction</h2>
+<p>The <a href="https://github.com/SeleniumHQ/selenium/wiki/PageObjects">Page Object Pattern</a> is a popular design pattern used to represent services provided by a page (reads the rendered page you see on your screen).
+Whilst this is a good pattern to drive the application under test, it should not be visible to the test class.</p>
+<h2 id="why">Why?</h2>
+<ol>
+<li>The test class is no longer isolated from internal code changes</li>
+<li>Binds the test class to the underlying technology/library</li>
+<li>Low-level code details pollute the test class</li>
+</ol>
+<p>The test class should represent the domain behaviours only, not the implementation. There are benefits to doing this:</p>
+<ol>
+<li>Your test is readable by engineers and non-technical colleagues</li>
+<li>Your test is resistant to superficial changes. Only a change to the domain behaviour will cause your test class change.</li>
+<li>Your test is technology agnostic, i.e. you are not bound to a particular technology.</li>
+<li>It improves discoverability for users of your framework.</li>
+</ol>
+<p>Let&rsquo;s examine an example:</p>
+<p>Example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MySampleTest</span> <span style="color:#f92672">{</span>
+    WebDriver driver <span style="color:#f92672">=</span> getDriver<span style="color:#f92672">();</span>
+    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://www.google.com&#34;</span><span style="color:#f92672">);</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">googleSearchTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    GoogleHomePage googleHomePage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">();</span>
+    googleHomePage<span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchTerm</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;page object&#34;</span><span style="color:#f92672">);</span>
+    googleHomePage<span style="color:#f92672">.</span><span style="color:#a6e22e">submitSearch</span><span style="color:#f92672">();</span>
+
+    assertEquals<span style="color:#f92672">(</span>driver<span style="color:#f92672">.</span><span style="color:#a6e22e">getTitle</span><span style="color:#f92672">(),</span> <span style="color:#e6db74">&#34;page object - Google Search&#34;</span><span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><em><strong>Figure 1.1</strong></em></p>
+<p>From the above code, think about what happens in the following scenario:</p>
+<p>a. The search engine changes from <code>Google</code> to <code>Bing</code></p>
+<p>b. If the method name changes from <code>submitSearch()</code> to <code>search()</code></p>
+<p>c. If the underlying library changes from <code>Selenium</code> to <code>HydrogenSulphur</code>?</p>
+<p>Let&rsquo;s refactor the test class in <em><strong>Figure 1.1</strong></em> to focus on the domain behaviour removing the Page Object.</p>
+<p>Assume the tests verifies:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">The company name is the &#34;first link text&#34; in &#34;Search Results&#34; 
+when they &#34;search for&#34; &#34;Selenium&#34; on any &#34;Search engine&#34;. 
+</code></pre></div><p>(Note: this is a trivia example, for illustration only)</p>
+<p>Then:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RefactoredSampleTest</span> <span style="color:#f92672">{</span>
+    SearchEngine searchEngine <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SearchEngine<span style="color:#f92672">();</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">orgNameIs_1st_ForSearchTerm_Selenium</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    SearchResult result <span style="color:#f92672">=</span> searchEngine<span style="color:#f92672">.</span><span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Selenium&#34;</span><span style="color:#f92672">);</span>
+
+    assertEquals<span style="color:#f92672">(</span>
+        result<span style="color:#f92672">.</span><span style="color:#a6e22e">firstLinkText</span><span style="color:#f92672">(),</span> <span style="color:#e6db74">&#34;The Selenium Browser Automation Project&#34;</span>
+    <span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><em><strong>Figure 1.2</strong></em></p>
+<p>As you can see there are no references to any page objects, instead domain
+wrapper classes are used to represent the business language.</p>
+<p>Let&rsquo;s revisit the earlier questions based on the refactored test.</p>
+<pre><code>-&gt; The search engine changes from `Google` to `Bing`?
+</code></pre><ul>
+<li><code>Test class is not aware of what engine is doing the search, so the test doesn't need to change</code></li>
+</ul>
+<pre><code>-&gt; If the method name changes from `submitSearch()` to `search()`?
+</code></pre><ul>
+<li><code>The test only cares about the behaviour and results. Implementation is not the responsibilty of the test</code>.</li>
+</ul>
+<pre><code>-&gt; If the underlying library changes from `Selenium` to `HydrogenSulphur`?
+</code></pre><ul>
+<li><code>The Test class is not bound to a specific library. In fact, you can use it as an API test without needing to change a single line</code></li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>As with everything in life, context is key!</p>
+<p>Understand and utilise what is best for your workflow or design decision(s).</p>
+<p>However I&rsquo;d recommend:</p>
+<pre><code>1. Don't let Page Objects bleed into your test. 
+2. Test classes should only focus on business scenarios.
+3. Your test should focus on behaviour instead of implementation.
+</code></pre><p>Now go give your Test Class some ❤️!</p>
+]]></content></item><item><title>How to solve the NoSuchMethodError toImmutableSet() error when using Google Autoservice</title><link>https://bongosway.github.io/posts/2020/07/how-to-solve-the-nosuchmethoderror-toimmutableset-error-when-using-google-autoservice/</link><pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate><guid>https://bongosway.github.io/posts/2020/07/how-to-solve-the-nosuchmethoderror-toimmutableset-error-when-using-google-autoservice/</guid><description>Introduction Whilst building a demo application showcasing google AutoService, I encountered the below error:
 java.lang.NoSuchMethodError: com.google.common.collect.ImmutableSet.toImmutableSet()Ljava/util/stream/Collector; Searching through the internet, most solutions recommended upgrading the Google Guava version but that did not resolve the problem.
 The main cause of this error, was putting the wrong Autoservice dependency in the classpath.
 If your POM file has the below dependency, then you are most likely get this error.
