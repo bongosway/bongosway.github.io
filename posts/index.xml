@@ -385,43 +385,20 @@ Whilst this is a good pattern to drive the application under test, it should not
 <li>It improves discoverability for users of your framework.</li>
 </ol>
 <p>Let&rsquo;s examine an example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MySampleTest</span> <span style="color:#f92672">{</span>
-    WebDriver driver <span style="color:#f92672">=</span> getDriver<span style="color:#f92672">();</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://www.google.com&#34;</span><span style="color:#f92672">);</span>
-
-    <span style="color:#a6e22e">@Test</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">googleSearchTest</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    GoogleHomePage googleHomePage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">();</span>
-    googleHomePage<span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchTerm</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;page object&#34;</span><span style="color:#f92672">);</span>
-    googleHomePage<span style="color:#f92672">.</span><span style="color:#a6e22e">submitSearch</span><span style="color:#f92672">();</span>
-
-    assertEquals<span style="color:#f92672">(</span>driver<span style="color:#f92672">.</span><span style="color:#a6e22e">getTitle</span><span style="color:#f92672">(),</span> <span style="color:#e6db74">&#34;page object - Google Search&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p><em><strong>Figure 1.1</strong></em></p>
+<p><img src="/images/po/sample1.png" alt="MySampleTest"></p>
+<p><em><strong>Figure 1.1</strong></em></p>
 <p>From the above code, think about what happens in the following scenario:</p>
 <p>a. The search engine changes from <code>Google</code> to <code>Bing</code></p>
 <p>b. If the method name changes from <code>submitSearch()</code> to <code>search()</code></p>
 <p>c. If the underlying library changes from <code>Selenium</code> to <code>HydrogenSulphur</code>?</p>
 <p>Let&rsquo;s refactor the test class in <em><strong>Figure 1.1</strong></em> to focus on the domain behaviour removing the Page Object.</p>
 <p>Assume the tests verifies:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">The company name is the &#34;first link text&#34; in &#34;Search Results&#34; 
-when they &#34;search for&#34; &#34;Selenium&#34; on any &#34;Search engine&#34;. 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plain" data-lang="plain">The company name is the &#34;first link text&#34; in &#34;Search Results&#34;
+when they &#34;search for&#34; &#34;Selenium&#34; on any &#34;Search engine&#34;.
 </code></pre></div><p>(Note: this is a trivia example, for illustration only)</p>
 <p>Then:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RefactoredSampleTest</span> <span style="color:#f92672">{</span>
-    SearchEngine searchEngine <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SearchEngine<span style="color:#f92672">();</span>
-
-    <span style="color:#a6e22e">@Test</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">orgNameIs_1st_ForSearchTerm_Selenium</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    SearchResult result <span style="color:#f92672">=</span> searchEngine<span style="color:#f92672">.</span><span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Selenium&#34;</span><span style="color:#f92672">);</span>
-
-    assertEquals<span style="color:#f92672">(</span>
-        result<span style="color:#f92672">.</span><span style="color:#a6e22e">firstLinkText</span><span style="color:#f92672">(),</span> <span style="color:#e6db74">&#34;The Selenium Browser Automation Project&#34;</span>
-    <span style="color:#f92672">);</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p><em><strong>Figure 1.2</strong></em></p>
+<p><img src="/images/po/sample2.png" alt="RefactoredSampleTest"></p>
+<p><em><strong>Figure 1.2</strong></em></p>
 <p>As you can see there are no references to any page objects, instead domain
 wrapper classes are used to represent the business language.</p>
 <p>Let&rsquo;s revisit the earlier questions based on the refactored test.</p>
@@ -441,7 +418,7 @@ wrapper classes are used to represent the business language.</p>
 <p>As with everything in life, context is key!</p>
 <p>Understand and utilise what is best for your workflow or design decision(s).</p>
 <p>However I&rsquo;d recommend:</p>
-<pre><code>1. Don't let Page Objects bleed into your test. 
+<pre><code>1. Don't let Page Objects bleed into your test.
 2. Test classes should only focus on business scenarios.
 3. Your test should focus on behaviour instead of implementation.
 </code></pre><p>Now go give your Test Class some :heart:!</p>
