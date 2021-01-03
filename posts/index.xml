@@ -104,32 +104,18 @@ Prerequisites Before you begin this guide you&amp;rsquo;ll need the following:</
 <p>Let&rsquo;s do it :muscle:</p>
 <h2 id="lets-start-the-refactoring-with-the-test-class">Lets start the refactoring with the test class:</h2>
 <h4 id="googleuitestjava">GoogleUITest.java</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleUITest</span> <span style="color:#f92672">{</span>
-
-  WebDriver driver <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ChromeDriver<span style="color:#f92672">();</span>
-
-  <span style="color:#a6e22e">@Test</span><span style="color:#f92672">(</span>description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Google Search displays more than 5 result set&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search_for_any_item_returns_more_than_5_result_set</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;google.com&#34;</span><span style="color:#f92672">);</span>
-
-    GoogleHomePage homePage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span>
-
-    SearchResultPage resultPage <span style="color:#f92672">=</span> 
-    homePage<span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Selenium&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">();</span>
-
-    assertTrue<span style="color:#f92672">(</span>resultPage<span style="color:#f92672">.</span><span style="color:#a6e22e">getResultSetCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> 5<span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h3 id="what-areas-we-can-improve-and-why">What areas we can improve and why:</h3>
+<p><img src="/images/po/pg-test.png" alt="test class"></p>
+<h3 id="what-areas-we-can-improve-and-why">What areas we can improve and why:</h3>
 <p><em>RULE:</em> Your Test Class Should test behaviour NOT implementation.</p>
 <ul>
 <li>
 <p><code>GoogleHomePage homePage = new GoogleHomePage(driver);</code></p>
 <ul>
-<li>This ties the test to the pageobject implementation of GoogleHomePage, therefore if the pageobject API changes, the test would need to be modified.</li>
+<li>This ties the test to the page object implementation of GoogleHomePage, therefore if the page object API changes, the test would need to be modified.</li>
 </ul>
 </li>
 <li>
-<p><code>SearchResultPage resultPage =  homePage.enterSearchText(&quot;Selenium&quot;).selectFirstAutoSuggest();</code></p>
+<p><code>SearchResultPage resultPage = homePage.enterSearchText(&quot;Selenium&quot;).selectFirstAutoSuggest();</code></p>
 <ul>
 <li>How the actions are done is not a concern for the test class i.e if <code>AutoSuggest</code> feature is removed, then this test class breaks.</li>
 </ul>
@@ -158,88 +144,22 @@ Prerequisites Before you begin this guide you&amp;rsquo;ll need the following:</
 </ul>
 <p><em>Using these approach to rewrite the test class, it should now look like this:</em></p>
 <h4 id="refactoredtestjava">RefactoredTest.java</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SearchEngineTest</span> <span style="color:#f92672">{</span>
-
-  WebDriver driver <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ChromeDriver<span style="color:#f92672">();</span>
-
-  <span style="color:#a6e22e">@Test</span><span style="color:#f92672">(</span>description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Google Search displays more than 5 result set&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search_for_any_item_returns_more_than_5_result_set</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;google.com&#34;</span><span style="color:#f92672">);</span>
-
-    <span style="color:#75715e">//concept
-</span><span style="color:#75715e"></span>    SearchEngine searchEngine <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleSearchEngine<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span> 
-
-                                             <span style="color:#75715e">//behaviour  
-</span><span style="color:#75715e"></span>    SearchResult searchResult <span style="color:#f92672">=</span> searchEngine<span style="color:#f92672">.</span><span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">&#39;</span>Selenium<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">);</span> 
-
-    <span style="color:#75715e">//tell, don&#39;t ask
-</span><span style="color:#75715e"></span>    assertTrue<span style="color:#f92672">(</span>searchResult<span style="color:#f92672">.</span><span style="color:#a6e22e">isGreaterThan</span><span style="color:#f92672">(</span>5<span style="color:#f92672">));</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>Voilà! all the clicks and selects et al have now disappeared!</p>
+<p><img src="/images/po/pg3.png" alt="RefactoredTest"></p>
+<p>Voilà! all the clicks and selects et al have now disappeared!</p>
 <h3 id="your-test-class-is-now-decoupled-from-the-page-object">Your test class is now decoupled from the page object.</h3>
 <p>If you replace <code>SearchEngine searchEngine = new GoogleSearchEngine(driver);</code><br>
 with <code>SearchEngine searchEngine = new BingSearchEngine(driver);</code><br>
 The test won&rsquo;t concern itself about the underlying search engine in use.</p>
 <h4 id="step-2">Step 2:</h4>
 <h4 id="1-lets-build-the-behaviour-as-an-interface">1. Let&rsquo;s build the behaviour as an Interface</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">SearchEngine</span> <span style="color:#f92672">{</span>
-  SearchResult <span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> String term<span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h4 id="2-lets-build-an-implementation-of-the-interface-using-the-pageobject-to-fulfil-the-needs-of-the-behaviour">2. Let&rsquo;s build an implementation of the Interface using the pageobject to fulfil the needs of the behaviour.</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleSearchEngine</span> <span style="color:#66d9ef">implements</span> SearchEngine <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GoogleSearchEngine</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#a6e22e">@Override</span>
-  <span style="color:#66d9ef">public</span> SearchResult <span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span>String term<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">(</span>driver<span style="color:#f92672">)</span>
-        <span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span>term<span style="color:#f92672">)</span>
-        <span style="color:#f92672">.</span><span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">();</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h4 id="3-this-is-the-googlehomepage-pageobject">3. This is the GoogleHomePage PageObject</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleHomePage</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By autoSuggest <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">cssSelector</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#searchform ul&gt;li&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By searchBox <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;q&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GoogleHomePage</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> GoogleHomePage <span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span>String text<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>searchBox<span style="color:#f92672">).</span><span style="color:#a6e22e">sendKeys</span><span style="color:#f92672">(</span>text<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> SearchResults <span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">(){</span>
-    <span style="color:#75715e">//We need to wait for auto suggest to populate
-</span><span style="color:#75715e"></span>    WebDriverWait wait <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> WebDriverWait<span style="color:#f92672">(</span>
-      driver<span style="color:#f92672">,</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofSeconds</span><span style="color:#f92672">(</span>10<span style="color:#f92672">),</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofMillis</span><span style="color:#f92672">(</span>100<span style="color:#f92672">)</span>
-    <span style="color:#f92672">);</span>
-    
-    wait<span style="color:#f92672">.</span><span style="color:#a6e22e">until</span><span style="color:#f92672">(</span>d <span style="color:#f92672">-&gt;</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">isDisplayed</span><span style="color:#f92672">());</span>
-
-    <span style="color:#75715e">//Once auto-suggest loads, we can click the first item
-</span><span style="color:#75715e"></span>    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">click</span><span style="color:#f92672">();</span>
-
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> SearchResultsPage<span style="color:#f92672">(</span>driver<span style="color:#f92672">).</span><span style="color:#a6e22e">collectResults</span><span style="color:#f92672">();</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h4 id="4-lets-build-the-searchresult">4. Let&rsquo;s build the SearchResult</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SearchResult</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&gt;</span> resultList<span style="color:#f92672">;</span>
-
-  <span style="color:#75715e">// constructor...
-</span><span style="color:#75715e"></span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isGreaterThan</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> number<span style="color:#f92672">){</span>
-    <span style="color:#66d9ef">return</span> resultList<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> number<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="what-have-we-done-so-far">What have we done so far?</h2>
+<p><img src="/images/po/interface1.png" alt="interface"></p>
+<h4 id="2-lets-build-an-implementation-of-the-interface-using-the-page-object-to-fulfil-the-needs-of-the-behaviour">2. Let&rsquo;s build an implementation of the Interface using the page object to fulfil the needs of the behaviour.</h4>
+<p><img src="/images/po/pg4.png" alt="implement interface"></p>
+<h4 id="3-this-is-the-googlehomepage-pageobject">3. This is the GoogleHomePage PageObject</h4>
+<p><img src="/images/po/pg5.png" alt="homePage"></p>
+<h4 id="4-lets-build-the-searchresult">4. Let&rsquo;s build the SearchResult</h4>
+<p><img src="/images/po/pg6.png" alt="search result"></p>
+<h2 id="what-have-we-done-so-far">What have we done so far?</h2>
 <ul>
 <li>Refactored the test class to contain only behaviour not implementation.</li>
 <li>Identify the domain concept and related behaviours.</li>
@@ -264,78 +184,12 @@ The test won&rsquo;t concern itself about the underlying search engine in use.</
 </ul>
 </div>
 </aside>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SearchEngineTest</span> <span style="color:#f92672">{</span>
-
-  WebDriver driver <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ChromeDriver<span style="color:#f92672">();</span>
-
-  <span style="color:#a6e22e">@Test</span><span style="color:#f92672">(</span>description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Google Search displays more than 5 result set&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search_for_any_item_returns_more_than_5_result_set</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;google.com&#34;</span><span style="color:#f92672">);</span>
-
-    <span style="color:#75715e">//concept
-</span><span style="color:#75715e"></span>    SearchEngine searchEngine <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleSearchEngine<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span> 
-
-                                             <span style="color:#75715e">//behaviour  
-</span><span style="color:#75715e"></span>    SearchResult searchResult <span style="color:#f92672">=</span> searchEngine<span style="color:#f92672">.</span><span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">&#39;</span>Selenium<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">);</span> 
-
-    <span style="color:#75715e">//tell, don&#39;t ask
-</span><span style="color:#75715e"></span>    assertTrue<span style="color:#f92672">(</span>searchResult<span style="color:#f92672">.</span><span style="color:#a6e22e">isGreaterThan</span><span style="color:#f92672">(</span>5<span style="color:#f92672">));</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">SearchEngine</span> <span style="color:#f92672">{</span>
-  SearchResult <span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> String term<span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleSearchEngine</span> <span style="color:#66d9ef">implements</span> SearchEngine <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GoogleSearchEngine</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#a6e22e">@Override</span>
-  <span style="color:#66d9ef">public</span> SearchResult <span style="color:#a6e22e">searchFor</span><span style="color:#f92672">(</span>String term<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">(</span>driver<span style="color:#f92672">)</span>
-        <span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span>term<span style="color:#f92672">)</span>
-        <span style="color:#f92672">.</span><span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">();</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleHomePage</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By autoSuggest <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">cssSelector</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#searchform ul&gt;li&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By searchBox <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;q&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GoogleHomePage</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> GoogleHomePage <span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span>String text<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>searchBox<span style="color:#f92672">).</span><span style="color:#a6e22e">sendKeys</span><span style="color:#f92672">(</span>text<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> SearchResults <span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">(){</span>
-    <span style="color:#75715e">//We need to wait for auto suggest to populate
-</span><span style="color:#75715e"></span>    WebDriverWait wait <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> WebDriverWait<span style="color:#f92672">(</span>
-      driver<span style="color:#f92672">,</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofSeconds</span><span style="color:#f92672">(</span>10<span style="color:#f92672">),</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofMillis</span><span style="color:#f92672">(</span>100<span style="color:#f92672">)</span>
-    <span style="color:#f92672">);</span>
-    
-    wait<span style="color:#f92672">.</span><span style="color:#a6e22e">until</span><span style="color:#f92672">(</span>d <span style="color:#f92672">-&gt;</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">isDisplayed</span><span style="color:#f92672">());</span>
-
-    <span style="color:#75715e">//Once auto-suggest loads, we can click the first item
-</span><span style="color:#75715e"></span>    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">click</span><span style="color:#f92672">();</span>
-
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> SearchResultsPage<span style="color:#f92672">(</span>driver<span style="color:#f92672">).</span><span style="color:#a6e22e">collectResults</span><span style="color:#f92672">();</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SearchResult</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&gt;</span> resultList<span style="color:#f92672">;</span>
-
-  <span style="color:#75715e">// constructor...
-</span><span style="color:#75715e"></span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isGreaterThan</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> number<span style="color:#f92672">){</span>
-    <span style="color:#66d9ef">return</span> resultList<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> number<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p><img src="/images/po/pg3.png" alt="RefactoredTest"></p>
+<p><img src="/images/po/interface1.png" alt="interface"></p>
+<p><img src="/images/po/pg4.png" alt="implement interface"></p>
+<p><img src="/images/po/pg5.png" alt="homePage"></p>
+<p><img src="/images/po/pg6.png" alt="search result"></p>
+<h2 id="conclusion">Conclusion</h2>
 <p>In this article we have applied design techniques to optimize the test and the underlying code design.
 Now you can run the test and put your result in the comments section.</p>
 <h2 id="things-to-note">Things to Note</h2>
@@ -388,22 +242,8 @@ When you&amp;rsquo;re finished, you&amp;rsquo;ll be able to create effective pag
 <p>Writing test first helps you get a clear picture of what Page Objects to build, and what apis the page object should expose.</p>
 <h3 id="test-class">Test Class</h3>
 <h4 id="googleuitestjava">GoogleUITest.java</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleUITest</span> <span style="color:#f92672">{</span>
-
-  WebDriver driver <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ChromeDriver<span style="color:#f92672">();</span>
-
-  <span style="color:#a6e22e">@Test</span><span style="color:#f92672">(</span>description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Google Search displays more than 5 result set&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search_for_any_item_returns_more_than_5_result_set</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;google.com&#34;</span><span style="color:#f92672">);</span>
-
-    GoogleHomePage homePage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span>
-
-    SearchResultPage resultPage <span style="color:#f92672">=</span> 
-    homePage<span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Selenium&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">();</span>
-
-    assertTrue<span style="color:#f92672">(</span>resultPage<span style="color:#f92672">.</span><span style="color:#a6e22e">getResultSetCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> 5<span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>Now we need to:</p>
+<p><img src="/images/po/pg-test.png" alt="test class"></p>
+<p>Now we need to:</p>
 <h2 id="identify-the-elements-we-need-from-the-homepage">Identify the elements we need from the HomePage</h2>
 <h3 id="google-homepage">Google Homepage</h3>
 <p><img src="/images/po/g-home-page.png" alt="google home page"></p>
@@ -487,49 +327,10 @@ Our focus for this guide is to use the browser debug console.</p>
 <p>Now that we have all the elements we need, Let&rsquo;s build the Page Object</p>
 <h2 id="build-the-page-object">Build the Page Object</h2>
 <h3 id="googlehomepagejava">GoogleHomePage.java</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleHomePage</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By autoSuggest <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">cssSelector</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#searchform ul&gt;li&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By searchBox <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;q&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GoogleHomePage</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> GoogleHomePage <span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span>String text<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>searchBox<span style="color:#f92672">).</span><span style="color:#a6e22e">sendKeys</span><span style="color:#f92672">(</span>text<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> SearchResultsPage <span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">(){</span>
-    <span style="color:#75715e">//We need to wait for auto suggest to populate
-</span><span style="color:#75715e"></span>    WebDriverWait wait <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> WebDriverWait<span style="color:#f92672">(</span>
-      driver<span style="color:#f92672">,</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofSeconds</span><span style="color:#f92672">(</span>10<span style="color:#f92672">),</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofMillis</span><span style="color:#f92672">(</span>100<span style="color:#f92672">)</span>
-    <span style="color:#f92672">);</span>
-    
-    wait<span style="color:#f92672">.</span><span style="color:#a6e22e">until</span><span style="color:#f92672">(</span>d <span style="color:#f92672">-&gt;</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">isDisplayed</span><span style="color:#f92672">());</span>
-
-    <span style="color:#75715e">//Once auto-suggest loads, we can click the first item
-</span><span style="color:#75715e"></span>    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">click</span><span style="color:#f92672">();</span>
-
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> SearchResultsPage<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h3 id="searchresultspagejava">SearchResultsPage.java</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SearchResultsPage</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By results <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">className</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;g&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SearchResultsPage</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getResultSetCount</span><span style="color:#f92672">(){</span>
-    List<span style="color:#f92672">&lt;</span>WebElement<span style="color:#f92672">&gt;</span> resultsCount <span style="color:#f92672">=</span> driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElements</span><span style="color:#f92672">(</span>results<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">return</span> resultsCount<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="what-have-we-done-so-far">What have we done so far?</h2>
+<p><img src="/images/po/pg1.png" alt="google home page object"></p>
+<h3 id="searchresultspagejava">SearchResultsPage.java</h3>
+<p><img src="/images/po/pg2.png" alt="search result page"></p>
+<h2 id="what-have-we-done-so-far">What have we done so far?</h2>
 <ul>
 <li>We defined what we are testing</li>
 <li>Map out the user journey</li>
@@ -553,60 +354,10 @@ Our focus for this guide is to use the browser debug console.</p>
 </ul>
 </div>
 </aside>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleUITest</span> <span style="color:#f92672">{</span>
-
-  WebDriver driver <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ChromeDriver<span style="color:#f92672">();</span>
-
-  <span style="color:#a6e22e">@Test</span><span style="color:#f92672">(</span>description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Google Search displays more than 5 result set&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search_for_any_item_returns_more_than_5_result_set</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;google.com&#34;</span><span style="color:#f92672">);</span>
-
-    GoogleHomePage homePage <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> GoogleHomePage<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span>
-
-    SearchResultPage resultPage <span style="color:#f92672">=</span> 
-    homePage<span style="color:#f92672">.</span><span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Selenium&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">();</span>
-
-    assertTrue<span style="color:#f92672">(</span>resultPage<span style="color:#f92672">.</span><span style="color:#a6e22e">getResultSetCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> 5<span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GoogleHomePage</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By autoSuggest <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">cssSelector</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;#searchform ul&gt;li&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By searchBox <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;q&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GoogleHomePage</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> GoogleHomePage <span style="color:#a6e22e">enterSearchText</span><span style="color:#f92672">(</span>String text<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>searchBox<span style="color:#f92672">).</span><span style="color:#a6e22e">sendKeys</span><span style="color:#f92672">(</span>text<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> SearchResultsPage <span style="color:#a6e22e">selectFirstAutoSuggest</span><span style="color:#f92672">(){</span>
-    WebDriverWait wait <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> WebDriverWait<span style="color:#f92672">(</span>
-      driver<span style="color:#f92672">,</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofSeconds</span><span style="color:#f92672">(</span>10<span style="color:#f92672">),</span> Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">ofMillis</span><span style="color:#f92672">(</span>100<span style="color:#f92672">)</span>
-    <span style="color:#f92672">);</span>
-
-    wait<span style="color:#f92672">.</span><span style="color:#a6e22e">until</span><span style="color:#f92672">(</span>d <span style="color:#f92672">-&gt;</span> d<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">isDisplayed</span><span style="color:#f92672">());</span>
-    driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElement</span><span style="color:#f92672">(</span>autoSuggest<span style="color:#f92672">).</span><span style="color:#a6e22e">click</span><span style="color:#f92672">();</span>
-
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> SearchResultsPage<span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SearchResultsPage</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> By results <span style="color:#f92672">=</span> By<span style="color:#f92672">.</span><span style="color:#a6e22e">className</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;g&#34;</span><span style="color:#f92672">);</span>
-  <span style="color:#66d9ef">private</span> WebDriver driver<span style="color:#f92672">;</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SearchResultsPage</span><span style="color:#f92672">(</span>WebDriver driver<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">driver</span> <span style="color:#f92672">=</span> driver<span style="color:#f92672">;</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getResultSetCount</span><span style="color:#f92672">(){</span>
-    List<span style="color:#f92672">&lt;</span>WebElement<span style="color:#f92672">&gt;</span> resultsCount <span style="color:#f92672">=</span> driver<span style="color:#f92672">.</span><span style="color:#a6e22e">findElements</span><span style="color:#f92672">(</span>results<span style="color:#f92672">);</span>
-    <span style="color:#66d9ef">return</span> resultsCount<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p><img src="/images/po/pg-test.png" alt="test class"></p>
+<p><img src="/images/po/pg1.png" alt="google home page object"></p>
+<p><img src="/images/po/pg2.png" alt="search result page"></p>
+<h2 id="conclusion">Conclusion</h2>
 <p>In this article you set up your first Page Object. Now you can run the test and put your result in the comments section.</p>
 <h2 id="things-to-note">Things to Note</h2>
 <p>Read <a href="/posts/a-beginners-guide-to-designing-page-objects-pt.2">next post</a> in the series</p>
