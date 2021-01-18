@@ -1,4 +1,193 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Thought before Tools</title><link>https://bongosway.github.io/posts/</link><description>Recent content in Posts on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-gb</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Fri, 01 Jan 2021 15:59:11 +0000</lastBuildDate><atom:link href="https://bongosway.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>My 2020 In Review: Staying Strong</title><link>https://bongosway.github.io/posts/my-2020-in-review-staying-strong/</link><pubDate>Fri, 01 Jan 2021 15:59:11 +0000</pubDate><guid>https://bongosway.github.io/posts/my-2020-in-review-staying-strong/</guid><description>Introduction Hey everyone! I’m excited to share with you my year end review for 2020.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Thought before Tools</title><link>https://bongosway.github.io/posts/</link><description>Recent content in Posts on Thought before Tools</description><generator>Hugo -- gohugo.io</generator><language>en-gb</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Mon, 11 Jan 2021 23:00:24 +0000</lastBuildDate><atom:link href="https://bongosway.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>A Beginner's Guide to Designing Page Objects - Pt.3</title><link>https://bongosway.github.io/posts/a-beginners-guide-to-designing-page-objects-pt.3/</link><pubDate>Mon, 11 Jan 2021 23:00:24 +0000</pubDate><guid>https://bongosway.github.io/posts/a-beginners-guide-to-designing-page-objects-pt.3/</guid><description>Introduction In the last post, we applied design techniques to refactor the test class and the underlying code design.
+Read it here )
+In this final guide, we will look at how to refactor a page object in response to changes from the business.
+When you finish reading, you will be able to create effective page objects for any UI interface you encounter using design principles.
+Prerequisites Before you begin this guide you&amp;rsquo;ll need the following: Read Part Two</description><content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
+<p>In the last post, we applied design techniques to refactor the test class and the underlying code design.</p>
+<p>Read it <a href="/posts/a-beginners-guide-to-designing-page-objects-pt.2">here</a> )</p>
+<p>In this final guide, we will look at how to refactor a page object in response to changes from the business.</p>
+<p>When you finish reading, you will be able to create effective page objects for any UI interface you encounter using design principles.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you begin this guide you&rsquo;ll need the following:
+
+<aside class="admonition note">
+	<div class="tip-icon">
+		
+	</div>
+	
+	
+	<div class="admonition-content"><ul>
+<li>Read <a href="/posts/a-beginners-guide-to-designing-page-objects-pt.2">Part Two</a></li>
+</ul>
+</div>
+</aside></p>
+<p>Let&rsquo;s do it 💪💪💪</p>
+<h2 id="the-current-test">The Current Test:</h2>
+<p><img src="/images/po/pg3.png" alt="test class"></p>
+<h3 id="new-requirement">New Requirement:</h3>
+
+<aside class="admonition note">
+	<div class="tip-icon">
+		
+	</div>
+	
+	
+	<div class="admonition-content"><ul>
+<li>Add test to search from the results page.</li>
+</ul>
+</div>
+</aside>
+<p>There are two Test cases now.</p>
+<p>We should write them out again so it is clear</p>
+<h4 id="testcase-1-user-can-start-search-from-home-page">Testcase 1: User can start search from Home page</h4>
+<ul>
+<li>Be on the Home page</li>
+<li>Type <code>Selenium Java</code> in the searchbox</li>
+<li>click the first suggestion from auto-suggest dropdown</li>
+<li>Assert results are displayed on the search page.</li>
+</ul>
+<h4 id="testcase-2-user-can-start-search-from-results-page">Testcase 2: User can start search from results page</h4>
+<ul>
+<li>Be on the Search results page</li>
+<li>Type <code>Selenium Java</code> in the searchbox</li>
+<li>click the first suggestion from auto-suggest dropdown</li>
+<li>Assert results are displayed on the search page.</li>
+</ul>
+
+<aside class="admonition note">
+	<div class="tip-icon">
+		
+	</div>
+	
+	
+	<div class="admonition-content"><ul>
+<li>Notice how similar this journey is to our existing test case.
+The only difference is one starts from the home page, the other from results page!</li>
+</ul>
+</div>
+</aside>
+<h2 id="step-1--add-the-new-test-case">Step 1 — Add the new test case</h2>
+
+    <img src="/images/po/new-requirement.png"  class="left"  />
+
+
+<h3 id="what-has-changed">What has changed?</h3>
+<ul>
+<li>
+<p>We added two new methods <em><code>openHomePage()</code></em> &amp; <em><code>openSearchPage()</code></em> to the search engine object, to make sure the test starts from the right page.</p>
+</li>
+<li>
+<p>We changed the <em>test name</em>, <em>assertion</em> and the <em>message returned</em> on failure.</p>
+</li>
+<li>
+<p>We removed all references to WebDriver from the test class.</p>
+</li>
+<li>
+<p><strong>NOTHING ELSE!</strong> That&rsquo;s right. Nothing else needed to change in the test class, because we have written a resilient class.</p>
+</li>
+</ul>
+<h2 id="step-2--lets-update-the-interface-with-the-2-new-methods">Step 2 — Let&rsquo;s update the interface with the 2 new methods</h2>
+
+    <img src="/images/po/new-interface.png"  class="left"  />
+
+
+<h2 id="step-3---lets-implement-the-new-methods-in-the-googlesearchengine-class">Step 3 - Let’s implement the new methods in the GoogleSearchEngine Class.</h2>
+
+    <img src="/images/po/new-implementation.png"  class="left"  />
+
+
+<h2 id="step-4---lets-refactor-the-searchfor-method-in-the-googlesearchengine-class">Step 4 - Let’s refactor the searchFor method in the GoogleSearchEngine Class.</h2>
+<p>Looking at current implementation below:</p>
+
+    <img src="/images/po/pg4.png"  class="left"  />
+
+
+<ul>
+<li>We notice the method began from the <code>GoogleHomePage</code>, entered <code>SearchText</code> via the HomePage and <code>results</code> is also coming from the homepage.</li>
+</ul>
+<p>In a nutshell, the implementation of <code>searchFor()</code> couples it to the GoogleHomePage making it hard to cater for the new requirement.</p>
+<h4 id="what-do-we-do">What do we do?</h4>
+<h3 id="1-decouple-searchfor-implementation-from-googlehomepage">1. Decouple SearchFor implementation from GoogleHomePage</h3>
+<ul>
+<li>
+<h4 id="find-the-common-element-between-homepage--result-page">Find the common element between Homepage &amp; Result page</h4>
+</li>
+</ul>
+<h4 id="_home-page_"><em>Home Page</em></h4>
+
+    <img src="/images/po/hp-searchform.png"  class="left"  />
+
+
+<h4 id="_results-page_"><em>Results Page</em></h4>
+
+    <img src="/images/po/rp-searchform.png"  class="left"  />
+
+
+<p>You will notice the <code>searchForm</code> is common across all Google Pages. Thus, making it a candidate to extract from the Homepage and move to its own class with the search behaviours.</p>
+<h4 id="_searchform_"><em>SearchForm</em></h4>
+
+    <img src="/images/po/new-searchform.png"  class="left"  />
+
+
+<ul>
+<li>
+<h4 id="refactor-searchfor-to-use-the-searchform-in-the-googlesearchengine-class">Refactor searchFor() to use the searchForm in the GoogleSearchEngine class.</h4>
+</li>
+</ul>
+
+    <img src="/images/po/new-searchFor.png"  class="left"  />
+
+
+<ul>
+<li>
+<h4 id="add-a-search-results-page-to-extract-results-into-domain-class-searchresults">Add a Search Results page to extract results into Domain class SearchResults.</h4>
+</li>
+<li>This page will extract the link &amp; linkText values from the WebElement List</li>
+</ul>
+
+    <img src="/images/po/sr-page.png"  class="left"  />
+
+
+<ul>
+<li>This populates the SearchResults domain object.</li>
+</ul>
+
+    <img src="/images/po/search-results.png"  class="left"  />
+
+
+<h3 id="now-are-back-to-the-where-we-started">Now are back to the where we started.</h3>
+<p>The test class! But this time, we have refactored all the framework code.
+The test should work perfectly.</p>
+
+    <img src="/images/po/new-requirement.png"  class="left"  />
+
+
+<h2 id="what-have-we-done-so-far">What have we done so far?</h2>
+<ul>
+<li>
+<p>Refactored the test class add new test case and remove framework code like <code>WebDriver</code>.</p>
+</li>
+<li>
+<p>Refactored GoogleSearchEngine#searchFor method to not depend on GoogleHomePage</p>
+</li>
+<li>
+<p>Added Navigation methods to the SearchEngine Interface.</p>
+</li>
+<li>
+<p>Created SearchForm component to handle all search related task.</p>
+</li>
+<li>
+<p>Created SearchResultPage to collect result.</p>
+</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>This completes the three part Page Object series 🥳.</p>
+<p>Now go forth and use the lessons from this article to build page  objects for your projects.</p>
+<h2 id="things-to-note">Things to Note</h2>
+<p>For brevity the classes were edited to focus on the relevant details, but don&rsquo;t worry you can find the complete code in my Github repo.</p>
+<p><a href="https://github.com/bongosway/selenium-starter">https://github.com/bongosway/selenium-starter</a></p>
+<p>I am happy to answer questions you may have, reach me on any of my handles.</p>
+]]></content></item><item><title>My 2020 In Review: Staying Strong</title><link>https://bongosway.github.io/posts/my-2020-in-review-staying-strong/</link><pubDate>Fri, 01 Jan 2021 15:59:11 +0000</pubDate><guid>https://bongosway.github.io/posts/my-2020-in-review-staying-strong/</guid><description>Introduction Hey everyone! I’m excited to share with you my year end review for 2020.
 2020 has been about staying strong mentally! 😃
 I’m glad to say that whilst 2020 might have been a tough year, I was able to achieve things I am proud of 💪.
 I’m excited at what 2021 is going to bring.
